@@ -16,18 +16,18 @@ const categories = [
 
 const CategorySection = () => {
   return (
-    <div className="py-4">
-      <div className="px-4 mb-4">
-        <h2 className="text-xl font-bold">Categories</h2>
+    <div className="py-2">
+      <div className="px-4 mb-2">
+        <h2 className="text-lg font-bold">Categories</h2>
       </div>
       
       <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex space-x-3 px-4">
+        <div className="flex space-x-2 px-4">
           {categories.map((category) => (
-            <Card key={category.id} className="featured-card card-hover border-0">
-              <CardContent className="flex flex-col items-center p-3">
-                <div className="text-2xl mb-1">{category.icon}</div>
-                <span className="text-sm font-medium">{category.name}</span>
+            <Card key={category.id} className="featured-card active:scale-95 transition-transform border-0 shadow-sm">
+              <CardContent className="flex flex-col items-center p-2">
+                <div className="text-xl mb-0.5">{category.icon}</div>
+                <span className="text-xs font-medium">{category.name}</span>
               </CardContent>
             </Card>
           ))}

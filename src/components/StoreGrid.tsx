@@ -13,19 +13,19 @@ const stores = [
 
 const StoreGrid = ({ title }: { title: string }) => {
   return (
-    <div className="py-4">
-      <div className="px-4 mb-4">
-        <h2 className="text-xl font-bold">{title}</h2>
+    <div className="py-2">
+      <div className="px-4 mb-2">
+        <h2 className="text-lg font-bold">{title}</h2>
       </div>
       
-      <div className="grid grid-cols-3 gap-3 px-4">
+      <div className="grid grid-cols-3 gap-2 px-4">
         {stores.map((store) => (
-          <Card key={store.id} className="featured-card card-hover border-0">
-            <CardContent className="p-3 text-center">
-              <div className="w-full aspect-square rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-                <div className="text-2xl font-bold text-gray-800">{store.name.charAt(0)}</div>
+          <Card key={store.id} className="featured-card active:scale-95 transition-transform border-0 shadow-sm">
+            <CardContent className="p-2 text-center">
+              <div className="w-full aspect-square rounded-lg bg-gray-100 flex items-center justify-center mb-1.5">
+                <div className="text-xl font-bold text-gray-800">{store.name.charAt(0)}</div>
               </div>
-              <h3 className="text-sm font-medium truncate">{store.name}</h3>
+              <h3 className="text-xs font-medium truncate">{store.name}</h3>
               <p className="text-xs text-secondary font-bold">{store.cashback}</p>
             </CardContent>
           </Card>

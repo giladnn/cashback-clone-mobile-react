@@ -18,13 +18,13 @@ const Index = () => {
       <Header />
       
       <main className="container mx-auto max-w-lg">
-        <div className="px-4 py-3">
-          <div className="relative mb-4">
+        <div className="px-4 py-2">
+          <div className="relative mb-3">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             <Input
               type="text"
               placeholder="Search stores, categories and deals..."
-              className="w-full pl-10 pr-4 py-2"
+              className="w-full pl-10 pr-4 py-2 text-sm rounded-full border-gray-200"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -32,34 +32,34 @@ const Index = () => {
           
           <Tabs defaultValue="featured" className="w-full">
             <ScrollArea className="w-full">
-              <TabsList className="w-full justify-start mb-3 bg-transparent p-0 h-auto">
-                <TabsTrigger value="featured" className="px-4 py-2 text-sm rounded-full">Featured</TabsTrigger>
-                <TabsTrigger value="popular" className="px-4 py-2 text-sm rounded-full">Popular</TabsTrigger>
-                <TabsTrigger value="new" className="px-4 py-2 text-sm rounded-full">New Offers</TabsTrigger>
-                <TabsTrigger value="categories" className="px-4 py-2 text-sm rounded-full">Categories</TabsTrigger>
-                <TabsTrigger value="all" className="px-4 py-2 text-sm rounded-full">All Stores</TabsTrigger>
+              <TabsList className="w-full justify-start mb-2 bg-transparent p-0 h-auto">
+                <TabsTrigger value="featured" className="px-3 py-1.5 text-xs rounded-full">Featured</TabsTrigger>
+                <TabsTrigger value="popular" className="px-3 py-1.5 text-xs rounded-full">Popular</TabsTrigger>
+                <TabsTrigger value="new" className="px-3 py-1.5 text-xs rounded-full">New Offers</TabsTrigger>
+                <TabsTrigger value="categories" className="px-3 py-1.5 text-xs rounded-full">Categories</TabsTrigger>
+                <TabsTrigger value="all" className="px-3 py-1.5 text-xs rounded-full">All Stores</TabsTrigger>
               </TabsList>
             </ScrollArea>
             
-            <TabsContent value="featured" className="mt-2">
+            <TabsContent value="featured" className="mt-1">
               <FeaturedSlider />
               <StoreGrid title="Popular Stores" />
             </TabsContent>
             
-            <TabsContent value="popular" className="mt-2">
+            <TabsContent value="popular" className="mt-1">
               <StoreGrid title="Popular Stores" />
             </TabsContent>
             
-            <TabsContent value="new" className="mt-2">
+            <TabsContent value="new" className="mt-1">
               <StoreGrid title="New Offers" />
             </TabsContent>
             
-            <TabsContent value="categories" className="mt-2">
+            <TabsContent value="categories" className="mt-1">
               <CategorySection />
               <StoreGrid title="Stores by Category" />
             </TabsContent>
             
-            <TabsContent value="all" className="mt-2">
+            <TabsContent value="all" className="mt-1">
               <CategorySection />
               <StoreGrid title="All Stores" />
             </TabsContent>
