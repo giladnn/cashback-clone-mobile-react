@@ -1,75 +1,202 @@
 
 import React, { useState } from 'react';
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  StyleSheet, 
+  SafeAreaView, 
+  ScrollView,
+  TouchableOpacity 
+} from 'react-native';
 import Header from '../components/Header';
 import FeaturedSlider from '../components/FeaturedSlider';
 import StoreGrid from '../components/StoreGrid';
 import CategorySection from '../components/CategorySection';
 import FooterNav from '../components/FooterNav';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("featured");
+  
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "featured":
+        return (
+          <>
+            <FeaturedSlider />
+            <StoreGrid title="Popular Stores" />
+          </>
+        );
+      case "popular":
+        return <StoreGrid title="Popular Stores" />;
+      case "new":
+        return <StoreGrid title="New Offers" />;
+      case "categories":
+        return (
+          <>
+            <CategorySection />
+            <StoreGrid title="Stores by Category" />
+          </>
+        );
+      case "all":
+        return (
+          <>
+            <CategorySection />
+            <StoreGrid title="All Stores" />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
   
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <SafeAreaView style={styles.container}>
       <Header />
       
-      <main className="container mx-auto max-w-lg">
-        <div className="px-4 py-2">
-          <div className="relative mb-3">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-            <Input
-              type="text"
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        stickyHeaderIndices={[1]} // The tab bar will be sticky
+      >
+        <View style={styles.searchContainer}>
+          <View style={styles.searchInputContainer}>
+            <Search style={styles.searchIcon} size={18} color="#9ca3af" />
+            <TextInput
+              style={styles.searchInput}
               placeholder="Search stores, categories and deals..."
-              className="w-full pl-10 pr-4 py-2 text-sm rounded-full border-gray-200"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChangeText={setSearchQuery}
+              placeholderTextColor="#9ca3af"
             />
-          </div>
-          
-          <Tabs defaultValue="featured" className="w-full">
-            <ScrollArea className="w-full">
-              <TabsList className="w-full justify-start mb-2 bg-transparent p-0 h-auto">
-                <TabsTrigger value="featured" className="px-3 py-1.5 text-xs rounded-full">Featured</TabsTrigger>
-                <TabsTrigger value="popular" className="px-3 py-1.5 text-xs rounded-full">Popular</TabsTrigger>
-                <TabsTrigger value="new" className="px-3 py-1.5 text-xs rounded-full">New Offers</TabsTrigger>
-                <TabsTrigger value="categories" className="px-3 py-1.5 text-xs rounded-full">Categories</TabsTrigger>
-                <TabsTrigger value="all" className="px-3 py-1.5 text-xs rounded-full">All Stores</TabsTrigger>
-              </TabsList>
-            </ScrollArea>
-            
-            <TabsContent value="featured" className="mt-1">
-              <FeaturedSlider />
-              <StoreGrid title="Popular Stores" />
-            </TabsContent>
-            
-            <TabsContent value="popular" className="mt-1">
-              <StoreGrid title="Popular Stores" />
-            </TabsContent>
-            
-            <TabsContent value="new" className="mt-1">
-              <StoreGrid title="New Offers" />
-            </TabsContent>
-            
-            <TabsContent value="categories" className="mt-1">
-              <CategorySection />
-              <StoreGrid title="Stores by Category" />
-            </TabsContent>
-            
-            <TabsContent value="all" className="mt-1">
-              <CategorySection />
-              <StoreGrid title="All Stores" />
-            </TabsContent>
-          </Tabs>
-        </div>
-      </main>
+          </View>
+        </View>
+        
+        <View style={styles.tabsContainer}>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.tabsScrollContent}
+          >
+            <TouchableOpacity 
+              style={[styles.tab, activeTab === "featured" && styles.activeTab]} 
+              onPress={() => setActiveTab("featured")}
+            >
+              <Text style={[styles.tabText, activeTab === "featured" && styles.activeTabText]}>
+                Featured
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, activeTab === "popular" && styles.activeTab]} 
+              onPress={() => setActiveTab("popular")}
+            >
+              <Text style={[styles.tabText, activeTab === "popular" && styles.activeTabText]}>
+                Popular
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, activeTab === "new" && styles.activeTab]} 
+              onPress={() => setActiveTab("new")}
+            >
+              <Text style={[styles.tabText, activeTab === "new" && styles.activeTabText]}>
+                New Offers
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, activeTab === "categories" && styles.activeTab]} 
+              onPress={() => setActiveTab("categories")}
+            >
+              <Text style={[styles.tabText, activeTab === "categories" && styles.activeTabText]}>
+                Categories
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, activeTab === "all" && styles.activeTab]} 
+              onPress={() => setActiveTab("all")}
+            >
+              <Text style={[styles.tabText, activeTab === "all" && styles.activeTabText]}>
+                All Stores
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+        
+        <View style={styles.tabContent}>
+          {renderTabContent()}
+        </View>
+      </ScrollView>
       
       <FooterNav />
-    </div>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f9fafb', // gray-50
+    paddingBottom: 56, // Height of footer
+  },
+  scrollView: {
+    flex: 1,
+    marginTop: 56, // Height of header
+  },
+  scrollContent: {
+    paddingBottom: 16,
+  },
+  searchContainer: {
+    padding: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
+  searchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#e5e7eb', // gray-200
+    borderRadius: 9999,
+    paddingHorizontal: 16,
+    height: 40,
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 14,
+    color: '#1f2937', // gray-800
+  },
+  tabsContainer: {
+    backgroundColor: '#f9fafb', // gray-50
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb', // gray-200
+  },
+  tabsScrollContent: {
+    paddingHorizontal: 16,
+  },
+  tab: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 9999,
+    marginRight: 8,
+  },
+  activeTab: {
+    backgroundColor: '#6366f1', // primary
+  },
+  tabText: {
+    fontSize: 12,
+    color: '#6b7280', // gray-500
+  },
+  activeTabText: {
+    color: 'white',
+  },
+  tabContent: {
+    paddingTop: 4,
+  },
+});
 
 export default Index;

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const stores = [
   { id: 1, name: "Amazon", cashback: "3.5%", logo: "https://placehold.co/200/e6f2ff/0066cc?text=A" },
@@ -13,26 +13,88 @@ const stores = [
 
 const StoreGrid = ({ title }: { title: string }) => {
   return (
-    <div className="py-2">
-      <div className="px-4 mb-2">
-        <h2 className="text-lg font-bold">{title}</h2>
-      </div>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.heading}>{title}</Text>
+      </View>
       
-      <div className="grid grid-cols-3 gap-2 px-4">
+      <View style={styles.grid}>
         {stores.map((store) => (
-          <Card key={store.id} className="featured-card active:scale-95 transition-transform border-0 shadow-sm">
-            <CardContent className="p-2 text-center">
-              <div className="w-full aspect-square rounded-lg bg-gray-100 flex items-center justify-center mb-1.5">
-                <div className="text-xl font-bold text-gray-800">{store.name.charAt(0)}</div>
-              </div>
-              <h3 className="text-xs font-medium truncate">{store.name}</h3>
-              <p className="text-xs text-secondary font-bold">{store.cashback}</p>
-            </CardContent>
-          </Card>
+          <TouchableOpacity
+            key={store.id}
+            style={styles.card}
+            activeOpacity={0.7}
+          >
+            <View style={styles.cardContent}>
+              <View style={styles.logoContainer}>
+                <Text style={styles.logoText}>{store.name.charAt(0)}</Text>
+              </View>
+              <Text style={styles.name} numberOfLines={1}>{store.name}</Text>
+              <Text style={styles.cashback}>{store.cashback}</Text>
+            </View>
+          </TouchableOpacity>
         ))}
-      </div>
-    </div>
+      </View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 8,
+  },
+  headerContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 8,
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 16,
+  },
+  card: {
+    width: '33.33%',
+    paddingHorizontal: 4,
+    paddingVertical: 4,
+  },
+  cardContent: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 8,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  logoContainer: {
+    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 8,
+    backgroundColor: '#f3f4f6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 6,
+  },
+  logoText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1f2937',
+  },
+  name: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  cashback: {
+    fontSize: 12,
+    color: '#ec4899', // secondary
+    fontWeight: 'bold',
+  },
+});
 
 export default StoreGrid;

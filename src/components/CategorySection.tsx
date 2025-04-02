@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Card, CardContent } from "@/components/ui/card";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 
 const categories = [
   { id: 1, name: "Fashion", icon: "👕" },
@@ -16,26 +15,71 @@ const categories = [
 
 const CategorySection = () => {
   return (
-    <div className="py-2">
-      <div className="px-4 mb-2">
-        <h2 className="text-lg font-bold">Categories</h2>
-      </div>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.heading}>Categories</Text>
+      </View>
       
-      <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex space-x-2 px-4">
-          {categories.map((category) => (
-            <Card key={category.id} className="featured-card active:scale-95 transition-transform border-0 shadow-sm">
-              <CardContent className="flex flex-col items-center p-2">
-                <div className="text-xl mb-0.5">{category.icon}</div>
-                <span className="text-xs font-medium">{category.name}</span>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    </div>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {categories.map((category) => (
+          <TouchableOpacity
+            key={category.id}
+            style={styles.card}
+            activeOpacity={0.7}
+          >
+            <View style={styles.cardContent}>
+              <Text style={styles.icon}>{category.icon}</Text>
+              <Text style={styles.name}>{category.name}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 8,
+  },
+  headerContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 8,
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingRight: 8,
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    marginRight: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  cardContent: {
+    padding: 8,
+    alignItems: 'center',
+  },
+  icon: {
+    fontSize: 20,
+    marginBottom: 2,
+  },
+  name: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
+});
 
 export default CategorySection;

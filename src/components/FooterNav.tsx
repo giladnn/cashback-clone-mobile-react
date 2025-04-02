@@ -1,34 +1,79 @@
 
 import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Home, Search, Tag, Heart, User } from "lucide-react";
 
 const FooterNav = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-40">
-      <div className="flex justify-around items-center h-14">
-        <button className="flex flex-col items-center justify-center text-primary">
-          <Home size={18} />
-          <span className="text-[10px] mt-0.5">Home</span>
-        </button>
-        <button className="flex flex-col items-center justify-center text-gray-500">
-          <Search size={18} />
-          <span className="text-[10px] mt-0.5">Search</span>
-        </button>
-        <button className="flex flex-col items-center justify-center text-gray-500">
-          <Tag size={18} />
-          <span className="text-[10px] mt-0.5">Deals</span>
-        </button>
-        <button className="flex flex-col items-center justify-center text-gray-500">
-          <Heart size={18} />
-          <span className="text-[10px] mt-0.5">Favorites</span>
-        </button>
-        <button className="flex flex-col items-center justify-center text-gray-500">
-          <User size={18} />
-          <span className="text-[10px] mt-0.5">Profile</span>
-        </button>
-      </div>
-    </nav>
+    <View style={styles.footer}>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.navButtonActive}>
+          <Home size={18} color="#6366f1" />
+          <Text style={styles.navTextActive}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton}>
+          <Search size={18} color="#6b7280" />
+          <Text style={styles.navText}>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton}>
+          <Tag size={18} color="#6b7280" />
+          <Text style={styles.navText}>Deals</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton}>
+          <Heart size={18} color="#6b7280" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton}>
+          <User size={18} color="#6b7280" />
+          <Text style={styles.navText}>Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 5,
+    zIndex: 40,
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: 56,
+  },
+  navButton: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonActive: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navText: {
+    fontSize: 10,
+    marginTop: 2,
+    color: '#6b7280',
+  },
+  navTextActive: {
+    fontSize: 10,
+    marginTop: 2,
+    color: '#6366f1',
+  },
+});
 
 export default FooterNav;

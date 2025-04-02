@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { ArrowRight } from "lucide-react";
 
 const slides = [
@@ -9,56 +9,133 @@ const slides = [
     title: "Amazon",
     cashback: "3.5%",
     image: "https://placehold.co/600x300/e6f2ff/0066cc?text=Amazon+Deal",
-    color: "bg-blue-100"
+    color: "#dbeafe" // bg-blue-100
   },
   {
     id: 2,
     title: "ASOS",
     cashback: "5%",
     image: "https://placehold.co/600x300/fff5e6/ff9900?text=ASOS+Deal",
-    color: "bg-orange-100"
+    color: "#ffedd5" // bg-orange-100
   },
   {
     id: 3,
     title: "Nike",
     cashback: "4%",
     image: "https://placehold.co/600x300/e6ffe6/00cc00?text=Nike+Deal",
-    color: "bg-green-100"
+    color: "#dcfce7" // bg-green-100
   }
 ];
 
 const FeaturedSlider = () => {
   return (
-    <div className="py-3">
-      <div className="flex items-center justify-between mb-2 px-4">
-        <h2 className="text-lg font-bold">Featured Deals</h2>
-        <button className="flex items-center text-primary text-xs font-medium">
-          View all <ArrowRight size={14} className="ml-1" />
-        </button>
-      </div>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.heading}>Featured Deals</Text>
+        <TouchableOpacity style={styles.viewAllButton}>
+          <Text style={styles.viewAllText}>View all</Text>
+          <ArrowRight size={14} color="#6366f1" style={styles.arrowIcon} />
+        </TouchableOpacity>
+      </View>
 
-      <div className="flex overflow-x-auto scrollbar-none snap-x snap-mandatory pb-3 px-4 space-x-3">
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+        snapToInterval={285} // Approximation of 85% width + margin
+        decelerationRate="fast"
+      >
         {slides.map((slide) => (
-          <div 
+          <TouchableOpacity 
             key={slide.id} 
-            className="snap-start snap-always flex-shrink-0 w-[85%]"
+            style={[styles.card, { backgroundColor: slide.color }]}
+            activeOpacity={0.9}
           >
-            <Card className={`featured-card shadow-sm active:scale-98 transition-transform border-0 h-36 ${slide.color}`}>
-              <CardContent className="p-0 h-full relative">
-                <div className="w-full h-full flex flex-col justify-between p-3">
-                  <div className="px-2 py-1 bg-white/80 rounded-full text-xs font-semibold self-start">{slide.cashback} Cashback</div>
-                  <div>
-                    <h3 className="text-lg font-bold">{slide.title}</h3>
-                    <p className="text-xs text-gray-600">Limited time offer</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+            <View style={styles.cardContent}>
+              <View style={styles.cashbackBadge}>
+                <Text style={styles.cashbackText}>{slide.cashback} Cashback</Text>
+              </View>
+              <View style={styles.cardFooter}>
+                <Text style={styles.cardTitle}>{slide.title}</Text>
+                <Text style={styles.cardSubtitle}>Limited time offer</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         ))}
-      </div>
-    </div>
+      </ScrollView>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 12,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingHorizontal: 16,
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  viewAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  viewAllText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#6366f1', // primary
+  },
+  arrowIcon: {
+    marginLeft: 4,
+  },
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  card: {
+    width: 280, // Approximately 85% of screen width on average devices
+    height: 144, // Match the original 36 rem
+    borderRadius: 8,
+    marginRight: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: 12,
+  },
+  cashbackBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  cashbackText: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  cardFooter: {
+    marginTop: 'auto',
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  cardSubtitle: {
+    fontSize: 12,
+    color: '#4b5563', // gray-600
+  },
+});
 
 export default FeaturedSlider;
